@@ -57,45 +57,61 @@ Kayıt sırasında **sadece `roleId` alanı zorunlu olarak alınır**, **`manage
 ### Ortam Değişkenleri (`.env.example`)
 env
 DATABASE_URL=postgresql://postgres:1234@localhost:5433/DevCase
+
 DB_SYNC=false
 
 JWT_SECRET=your_access_secret_here
+
 JWT_REFRESH_SECRET=your_refresh_secret_here
+
 ACCESS_TOKEN_TTL=15m
+
 REFRESH_TOKEN_TTL=7d
 
 PORT=4000
+
 CORS_ORIGIN=http://localhost:3000
 
-Veri Modeli
+Veri Modeli:
 
 Role: id, name
 User: id, fullName, email, passwordHash, roleId, managerId, status (active/passive), timestamps
 
-Kimlik Doğrulama Akışı
+Kimlik Doğrulama Akışı:
 
 POST /auth/register → Public, yeni kullanıcı oluşturur.
+
 POST /auth/login → Public, access + refresh token üretir.
+
 POST /auth/refresh → Refresh token ile yeni access token alır.
+
 POST /auth/logout → Refresh token geçersiz hale gelir.
 
 
-Kullanıcı İşlemleri
+Kullanıcı İşlemleri:
 
 GET /users → Listeleme (sayfa, arama, sıralama, filtre).
+
 POST /users → Admin, yeni kullanıcı ekler.
+
 GET /users/:id → ID’ye göre kullanıcı gösterme.
+
 PUT /users/:id → Güncelleme.
+
 DELETE /users/:id → Silme.
+
 GET /roles → Roller.
 
-Validasyon
+Validasyon:
 
 Login: { email, password }
+
 Register/Create: { fullName, email, password, roleId }
+
 ListUsers: query param validasyonu (sayfalama/sıralama/filtre).
 
 DATABASE_URL: tek bağlantı stringi (sequelize ve runtime ortak).
+
 DB_SYNC: dev’de true yaparsan sequelize.sync({ alter:true }). Prod’da kesin false.
 
 
@@ -103,24 +119,25 @@ DB_SYNC: dev’de true yaparsan sequelize.sync({ alter:true }). Prod’da kesin 
 
 ## ⚡ Kurulum ve Çalıştırma
 
-### 0) Gereksinimler
+### 0) Gereksinimler:
 - Node.js 18+  
 - PostgreSQL 13+  
 
 
-2) Bağımlılıklar
+2) Bağımlılıklar:
 # kök klasör
 npm run i:all
 # veya ayrı ayrı
 cd server && npm i
 cd ../client && npm i
 
-3) Veritabanı Migrasyon & Seed
+3) Veritabanı Migrasyon & Seed:
 cd server
 npx sequelize-cli db:migrate
+
 npx sequelize-cli db:seed:all
 
-4) Çalıştırma
+4) Çalıştırma:
 # sadece backend
 cd server && npm run dev
 # sadece frontend
@@ -129,8 +146,10 @@ npm run dev
 
 #Postman
 
-*Kayıt olma
+*Kayıt olma:
+
 POST http://localhost:4000/api/auth/register
+
 Content-Type: application/json
 
 {
@@ -141,8 +160,10 @@ Content-Type: application/json
 }
 
 
-*Giriş yapma
+*Giriş yapma:
+
 POST http://localhost:4000/api/auth/login
+
 Content-Type: application/json
 
 {
@@ -151,7 +172,8 @@ Content-Type: application/json
 }
 
 
-*Refresh token
+*Refresh token:
+
 POST http://localhost:4000/api/auth/refresh
 Authorization: Bearer <accessToken>
 Content-Type: application/json
@@ -161,13 +183,18 @@ Content-Type: application/json
 }
 
 
-*Cikis yapma
+*Cikis yapma:
+
 POST http://localhost:4000/api/auth/logout
+
 Authorization: Bearer <accessToken>
 
-*Kullanıcı Ekleme
+*Kullanıcı Ekleme:
+
 POST http://localhost:4000/api/users
+
 Authorization: Bearer <accessToken>
+
 Content-Type: application/json
 
 {
@@ -178,24 +205,33 @@ Content-Type: application/json
 }
 
 
-*Tum kullanıcıları doner
+*Tum kullanıcıları doner:
+
 GET http://localhost:4000/api/users
+
 Authorization: Bearer <accessToken>
 
 
-*Aranılan kullanıcıyı doner
+*Aranılan kullanıcıyı doner:
+
 GET http://localhost:4000/api/users/id
+
 Authorization: Bearer <accessToken>
 
 
-*Kullanıcı Silme
-DELETE http://localhost:4000/api/users/35
+*Kullanıcı Silme:
+
+DELETE http://localhost:4000/api/users/id
+
 Authorization: Bearer <accessToken>
 
 
-*Kullanıcı guncelleme
+*Kullanıcı guncelleme:
+
 PUT http://localhost:4000/api/users/id
+
 Authorization: Bearer <accessToken>
+
 Content-Type: application/json
 
 {
@@ -203,3 +239,4 @@ Content-Type: application/json
   "isActive": false,
   "managerId": 1
 }
+
