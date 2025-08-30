@@ -175,11 +175,13 @@ Content-Type: application/json
 *Refresh token:
 
 POST http://localhost:4000/api/auth/refresh
-Authorization: Bearer <accessToken>
+
+Authorization: Bearer accessToken
+
 Content-Type: application/json
 
 {
-  "refreshToken": "<accsessToken>"
+  "refreshToken": "accsessToken"
 }
 
 
@@ -187,13 +189,13 @@ Content-Type: application/json
 
 POST http://localhost:4000/api/auth/logout
 
-Authorization: Bearer <accessToken>
+Authorization: Bearer accessToken
 
 *Kullanıcı Ekleme:
 
 POST http://localhost:4000/api/users
 
-Authorization: Bearer <accessToken>
+Authorization: Bearer accessToken
 
 Content-Type: application/json
 
@@ -209,28 +211,28 @@ Content-Type: application/json
 
 GET http://localhost:4000/api/users
 
-Authorization: Bearer <accessToken>
+Authorization: Bearer accessToken
 
 
 *Aranılan kullanıcıyı doner:
 
 GET http://localhost:4000/api/users/id
 
-Authorization: Bearer <accessToken>
+Authorization: Bearer accessToken
 
 
 *Kullanıcı Silme:
 
 DELETE http://localhost:4000/api/users/id
 
-Authorization: Bearer <accessToken>
+Authorization: Bearer accessToken
 
 
 *Kullanıcı guncelleme:
 
 PUT http://localhost:4000/api/users/id
 
-Authorization: Bearer <accessToken>
+Authorization: Bearer accessToken
 
 Content-Type: application/json
 
